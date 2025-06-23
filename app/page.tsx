@@ -7,6 +7,7 @@ import AwardsPanels from "@/components/awards-panels";
 import CareDuelBanner from "@/components/careduel-banner";
 import RaffleTicketWidget from "@/components/raffle-ticket-widget";
 
+// TokyoLore - Merged project with all modules deployed
 export default function Home() {
   return (
     <div className="pt-20">
