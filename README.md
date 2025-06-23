@@ -1,58 +1,45 @@
-# Candidate-00X-Tokyolore-module-raffle-widget
+# TokyoLore Staging - Unified Platform
 
-This repository contains the **Raffle Ticket Widget** module for TokyoLore.com, built according to the specifications provided.
+This repository contains the **complete TokyoLore platform** - a city-centric platform showcasing Tokyo's hidden street-art, urban legends, and community stories through photos, videos, poems, sketches, and interactive features.
 
-## 🎯 What This Module Implements
+## 🎯 Merged Modules
 
-### ✅ Raffle Ticket Widget
+This project successfully merges all modules from both source repositories:
 
-- **Location**: Sidebar on `/` and `/stories` pages
-- **Collapsed State**: Coral ticket icon (#E91E63), fixed bottom-right, 50×50px, border-radius 8px
-- **Expanded State**: Slide-up panel (300×350px) with ticket display and actions
-- **Features**:
-  - Shows current ticket count: "✅ You have X tickets."
-  - "Join the Raffle" button (coral background, white text)
-  - "Proceed to Payment" button for Stripe integration
-  - Error handling: "❌ Error, try again."
+### From Repository 1: [Task-Tokyo-Lore](https://github.com/arpitsehal/Task-Tokyo-Lore)
+- ✅ **Header & Footer** - Beautiful navigation with newsletter signup
+- ✅ **Story Grid** - Interactive story cards with hover effects
+- ✅ **Submit Form** - Complete story submission with validation
+- ✅ **SEO & Copy** - Proper metadata and descriptions
 
-### ✅ API Endpoints
-
-- `GET /api/raffle-status?userId=123` → Returns `{ "tickets": number }`
-- `POST /api/raffle-entry` with `{ "userId": 123 }` → Returns `{ "success": true, "tickets": newCount }`
-
-### ✅ Stripe Payment Integration
-
-- **Flow**: "Proceed to Payment" → Stripe Checkout for $1 USD
-- `POST /api/create-checkout-session` with `{ "amount": 100, "currency": "usd", "userId": "123" }`
-- Webhook handling at `POST /api/stripe-webhook`
-- Success/failure pages with proper messaging
-
-### ✅ CareDuel Banner
-
-- **Location**: Immediately below hero on `/`
-- **Content**: "Check out this week's featured topic on CareDuel" linking to https://careduel.com/topic-of-the-week
-- **Styling**: Light gray background, coral border, Lora 18px font, underline on hover
-
-### ✅ Awards Panels
-
-- **Location**: Homepage below CareDuel banner
-- **Panels**:
-  - 🏆 "Vote Top216" → https://top216.com/vote
-  - ✨ "Explore TheTop36" → https://thetop36.com/highlights
-- **Styling**: White background, charcoal border (#424242), coral hover (#E91E63), Playfair Display 20px
-- **Responsive**: Side-by-side on desktop, stacked on mobile
-
-## 🎨 Design Features
-
-- **CSS Variables**: Uses `--primary-color` (green) and `--accent-color` (blue) as specified
-- **Responsive Design**: Mobile-first approach with proper breakpoints
-- **Typography**: Lora and Playfair Display fonts as specified
-- **Color Palette**: Coral (#E91E63), Charcoal (#424242), with CSS variable fallbacks
+### From Repository 2: [candidate-00X-Tokyolore-raffle](https://github.com/harshadidev/candidate-00X-Tokyolore-raffle)
+- ✅ **Raffle Ticket Widget** - Fixed bottom-right with expand/collapse
+- ✅ **Payments Integration** - Stripe checkout for $1 USD tickets
+- ✅ **CareDuel Banners** - Topic of the week banner
+- ✅ **Awards Panels** - Top216 and TheTop36 panels
 
 ## 🚀 Live Demo
 
-**Frontend**: [Your deployed URL here](https://raffle-ticket-widget.vercel.app/)
-**API Endpoints**: All `/api/*` routes accessible over HTTPS
+**Staging URL**: [https://tokyolore-staging.vercel.app](https://tokyolore-staging.vercel.app)
+
+## 🎨 Features
+
+### Core Platform
+- **Beautiful Hero Section** - Gradient background with call-to-action buttons
+- **Story Discovery** - Grid layout showcasing Tokyo's hidden stories
+- **Community Submission** - Form for users to share their Tokyo experiences
+- **Responsive Design** - Works perfectly on mobile, tablet, and desktop
+
+### Interactive Elements
+- **Raffle Widget** - Collapsible ticket widget with payment integration
+- **Stripe Payments** - Secure checkout for purchasing raffle tickets
+- **Hover Effects** - Smooth animations and transitions throughout
+- **Loading States** - Proper loading indicators and skeleton screens
+
+### External Integrations
+- **CareDuel Banner** - Links to weekly featured topics
+- **Awards Panels** - Integration with Top216 and TheTop36 platforms
+- **Newsletter Signup** - Email collection in footer
 
 ## 🛠️ Tech Stack
 
@@ -60,32 +47,43 @@ This repository contains the **Raffle Ticket Widget** module for TokyoLore.com, 
 - **Styling**: Tailwind CSS with custom CSS variables
 - **Payment**: Stripe integration with webhooks
 - **TypeScript**: Full type safety
-- **Deployment**: Ready for Vercel/Netlify/Heroku
+- **Deployment**: Vercel (staging)
 
-## 📋 Setup Instructions
+## 📋 Pages
+
+- **Home** (`/`) - Hero section, about, CareDuel banner, awards panels
+- **Stories** (`/stories`) - Grid of Tokyo stories with loading states
+- **Submit** (`/submit`) - Story submission form with validation
+- **Payment Success** (`/payment-success`) - Post-payment confirmation
+- **Payment Cancelled** (`/payment-cancelled`) - Payment failure page
+
+## 🔧 API Endpoints
+
+- `GET /api/raffle-status` - Get user's ticket count
+- `POST /api/raffle-entry` - Join raffle (add ticket)
+- `POST /api/create-checkout-session` - Create Stripe checkout
+- `POST /api/stripe-webhook` - Handle payment completion
+
+## 🚀 Quick Start
 
 1. **Clone the repository**
-
    ```bash
-   git clone [repo-url](https://github.com/harshadidev/candidate-00X-Tokyolore-raffle.git)
-   cd candidate-00X-Tokyolore-raffle
+   git clone https://github.com/krishna512-code/tokyolore-staging.git
+   cd tokyolore-staging
    ```
 
 2. **Install dependencies**
-
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
-
    ```bash
    cp .env.local.example .env.local
    # Add your Stripe keys
    ```
 
 4. **Run development server**
-
    ```bash
    npm run dev
    ```
@@ -96,65 +94,52 @@ This repository contains the **Raffle Ticket Widget** module for TokyoLore.com, 
    npm start
    ```
 
-## 🔧 Environment Variables
+## 🔒 Environment Variables
 
 ```env
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
 STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key_here
 STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
+NEXT_PUBLIC_APP_URL=https://your-deployed-url.com
 ```
 
 ## 📁 Project Structure
 
 ```
-├── app/
-│   ├── api/                    # API routes
-│   │   ├── raffle-status/      # GET ticket count
-│   │   ├── raffle-entry/       # POST join raffle
-│   │   ├── create-checkout-session/ # POST Stripe checkout
-│   │   └── stripe-webhook/     # POST webhook handler
-│   ├── payment-success/        # Success page
-│   ├── payment-cancelled/      # Cancelled page
-│   └── stories/               # Stories page
-├── components/
+├── app/                    # Next.js App Router pages
+│   ├── api/               # API routes
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout with header/footer
+│   ├── page.tsx           # Home page
+│   ├── stories/           # Stories page
+│   ├── submit/            # Submit page
+│   └── payment-*/         # Payment result pages
+├── components/            # React components
+│   ├── header.tsx         # Navigation header
+│   ├── footer.tsx         # Site footer
+│   ├── story-card.tsx     # Story display component
 │   ├── raffle-ticket-widget.tsx
 │   ├── careduel-banner.tsx
-│   └── awards-panels.tsx
-└── lib/
-    └── mock-db.ts             # Demo database
+│   ├── awards-panels.tsx
+│   └── ui/               # UI component library
+├── hooks/                # Custom React hooks
+├── lib/                  # Utility functions and services
+└── types/                # TypeScript type definitions
 ```
 
-## 🧪 Testing Stripe Integration
+## 🎨 Design Features
+
+- **Typography**: Lora and Playfair Display fonts
+- **Color Palette**: Pink/coral theme (#E91E63) with CSS variables
+- **Animations**: Smooth transitions and hover effects
+- **Responsive**: Mobile-first design approach
+- **Accessibility**: ARIA labels and keyboard navigation
+
+## 🧪 Testing
 
 Use Stripe test cards:
-
 - **Success**: 4242424242424242
 - **Decline**: 4000000000000002
-
-## 🚀 Deployment
-
-### Vercel
-
-```bash
-vercel --prod
-```
-
-
-
-## 📝 Implementation Notes
-
-- **Widget Positioning**: Fixed bottom-right with exact dimensions (50×50px collapsed, 300×350px expanded)
-- **Error Handling**: Proper error states with user-friendly messages
-- **Payment Flow**: Complete Stripe integration with webhook verification
-- **Responsive**: Works perfectly on mobile, tablet, and desktop
-- **Accessibility**: ARIA labels and keyboard navigation support
-
-## 🔒 Security
-
-- Stripe webhook signature verification
-- Environment variable protection
-- Input validation on all API endpoints
-- CORS handling for cross-origin requests
 
 ## 📊 Performance
 
@@ -163,8 +148,15 @@ vercel --prod
 - **Loading States**: Proper loading indicators throughout
 - **Caching**: Optimized API responses and static assets
 
+## 🔗 Links
+
+- **GitHub Repository**: https://github.com/krishna512-code/tokyolore-staging
+- **Live Staging**: https://tokyolore-staging.vercel.app
+- **Original Repo 1**: https://github.com/arpitsehal/Task-Tokyo-Lore
+- **Original Repo 2**: https://github.com/harshadidev/candidate-00X-Tokyolore-raffle
+
 ---
 
-**Repository**: `candidate-00X-Tokyolore-raffle`
-**Module**: Raffle Ticket Widget + Stripe Integration + CareDuel Banner + Awards Panels
-**Status**: ✅ Complete and Ready for Production
+**Repository**: `tokyolore-staging`  
+**Status**: ✅ **Complete and Deployed**  
+**All modules successfully merged and unified**
