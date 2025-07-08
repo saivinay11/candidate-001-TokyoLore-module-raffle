@@ -1,147 +1,92 @@
-"use client";
+'use client';
+import { useEffect, useState } from 'react';
+import styles from './raffle-ticket-widget.module.css';
 
-import { useState, useEffect } from "react";
-import { Ticket } from "lucide-react";
-import { APP_CONFIG } from "@/lib/config";
-import { LoadingSpinner } from "./ui/loading-spinner";
-import { ActionButton } from "./ui/action-button";
-import { useRaffle } from "@/hooks/use-raffle";
-
-interface RaffleTicketWidgetProps {
-  userId: string;
+interface Props {
+  userId?: number;
 }
 
-export default function RaffleTicketWidget({
-  userId,
-}: RaffleTicketWidgetProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+const RaffleWidget = ({ userId = 123 }: Props) => {
+  const [expanded, setExpanded] = useState(false);
+  const [tickets, setTickets] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const {
-    ticketCount,
-    isLoading: isInitialLoading,
-    isJoiningRaffle,
-    isProcessingPayment,
-    error,
-    fetchTickets,
-    joinRaffle,
-    proceedToPayment,
-  } = useRaffle({
-    userId,
-    autoFetch: false,
-  });
-
-  useEffect(() => {
-    if (isExpanded && ticketCount === null) {
-      fetchTickets();
+  const fetchTickets = async () => {
+    try {
+      const res = await fetch(`/api/raffle-status?userId=${userId}`);
+      const data = await res.json();
+      setTickets(data.tickets);
+      setError('');
+    } catch {
+      setError('Error, try again.');
     }
-  }, [isExpanded, ticketCount, fetchTickets]);
-  const handleProceedToPayment = () => {
-    proceedToPayment({
-      amount: APP_CONFIG.stripe.ticketPrice,
-      currency: APP_CONFIG.stripe.currency,
-      ticketCount: ticketCount || 1, // Default to 1 if null
-    });
   };
 
-  // UI Constants from APP_CONFIG
-  const { primaryColor, borderRadius } = APP_CONFIG.widgetStyles;
+  const joinRaffle = async () => {
+    try {
+      setLoading(true);
+      await fetch('/api/raffle-entry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId }),
+      });
+      await fetchTickets();
+    } catch {
+      setError('Error, try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const proceedToPayment = async () => {
+    try {
+      const res = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: 100, currency: 'usd' }),
+      });
+      const data = await res.json();
+      if (data.sessionId) {
+        window.location.href = `https://checkout.stripe.com/pay/${data.sessionId}`;
+      } else {
+        setError('Payment failed. Please try again.');
+      }
+    } catch {
+      setError('Payment failed. Please try again.');
+    }
+  };
+
+  useEffect(() => {
+    if (expanded) fetchTickets();
+  }, [expanded]);
 
   return (
-    <div
-      className={`fixed bottom-4 right-4 z-50 transition-all duration-300 ease-in-out ${
-        isExpanded ? "w-[300px] h-[350px]" : "w-[50px] h-[50px]"
-      }`}
-      data-testid="raffle-widget"
-    >
-      {!isExpanded ? (
-        <button
-          onClick={() => setIsExpanded(true)}
-          className="w-full h-full flex items-center justify-center bg-[#E91E63] text-white shadow-lg hover:bg-opacity-90 transition-all duration-300 ease-in-out hover:shadow-xl"
-          style={{ borderRadius }}
-          aria-label="Open raffle ticket widget"
-          data-testid="raffle-widget-toggle"
-        >
-          <Ticket className="w-6 h-6" />
-        </button>
-      ) : (
-        <div
-          className="w-full h-full bg-white shadow-xl p-4 flex flex-col border animate-slideIn"
-          style={{
-            borderRadius,
-            borderColor: `var(--accent-color, ${primaryColor})`,
-            boxShadow: `0 10px 25px -5px rgba(233, 30, 99, 0.3)`,
-            animation: "slideIn 0.3s ease-out",
-          }}
-        >
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-lg flex items-center">
-              <Ticket className="w-5 h-5 mr-2 text-[#E91E63]" />
-              <span>Raffle Tickets</span>
-            </h3>
-            <button
-              onClick={() => setIsExpanded(false)}
-              className="text-gray-500 hover:text-[#E91E63] transition-colors duration-200"
-              aria-label="Close raffle ticket widget"
-              data-testid="raffle-widget-close"
-            >
-              ✕
-            </button>
-          </div>
+    <>
+      <div className={styles.icon} onClick={() => setExpanded(!expanded)} title="Open Raffle">
+        🎟️
+      </div>
 
-          <div className="flex-grow flex flex-col items-center justify-center min-h-0">
-            {error ? (
-              <div
-                className="text-red-500 text-center mb-4 font-medium"
-                role="alert"
-              >
-                {error}
-              </div>
-            ) : null}
-
-            {isInitialLoading ? (
-              <div className="text-center">
-                <LoadingSpinner size="large" className="mx-auto mb-4" />
-                <p className="text-gray-600">Loading tickets...</p>
-              </div>
-            ) : (
-              <div className="text-center w-full">
-                <p
-                  className="text-xl mb-6 font-medium"
-                  data-testid="ticket-count"
-                >
-                  ✅ You have {ticketCount} tickets.
-                </p>
-
-                <div className="space-y-4">
-                  <ActionButton
-                    onClick={joinRaffle}
-                    isLoading={isJoiningRaffle}
-                    loadingText="Joining..."
-                    disabled={isJoiningRaffle || isProcessingPayment}
-                    fullWidth
-                    icon={<Ticket className="w-4 h-4" />}
-                    data-testid="join-raffle-button"
-                  >
-                    Join the Raffle
-                  </ActionButton>
-
-                  <ActionButton
-                    onClick={handleProceedToPayment}
-                    isLoading={isProcessingPayment}
-                    loadingText="Processing..."
-                    disabled={isJoiningRaffle || isProcessingPayment}
-                    variant="success"
-                    fullWidth
-                    data-testid="payment-button"
-                  >
-                    Proceed to Payment
-                  </ActionButton>
-                </div>
-              </div>
-            )}
-          </div>
+      {expanded && (
+        <div className={styles.panel}>
+          {error && <p className={styles.error}>{error}</p>}
+          {tickets !== null ? (
+            <>
+              <p>You have {tickets} tickets.</p>
+              <button className={styles.button} onClick={joinRaffle} disabled={loading}>
+                {loading ? 'Joining...' : 'Join the Raffle'}
+              </button>
+              <button className={styles.button} onClick={proceedToPayment}>
+                Proceed to Payment
+              </button>
+            </>
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
-}
+};
+
+export default RaffleWidget;
