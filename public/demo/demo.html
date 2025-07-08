@@ -9,29 +9,33 @@
       font-family: Arial, sans-serif;
       padding: 2rem;
     }
-    iframe {
-      width: 100%;
-      height: 700px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
   </style>
 </head>
 <body>
   <h1>🎟️ Raffle Widget Demo</h1>
-  <p>This demo shows the raffle ticket widget in action, embedded from the live staging site.</p>
+  <p>This demo shows the raffle ticket widget in action, rendered directly onto this page.</p>
 
-  <iframe
-    src="https://candidate-001-tokyolore-module-raffle.vercel.app/"
-    title="Widget Live Demo"
-    allow="payment"
-  ></iframe>
+  <!-- Raffle Widget Mount Point -->
+  <div id="widget-root"></div>
 
   <p><strong>Test the following:</strong></p>
   <ul>
     <li>Click the red 🎟️ ticket icon in the bottom-right corner</li>
     <li>Click "Join the Raffle" to increase ticket count</li>
-    <li>Click "Proceed to Payment" to open Stripe test checkout</li>
+    <li>Click "Proceed to Payment" to open Stripe checkout in a new tab</li>
   </ul>
+
+  <!-- Load React, ReactDOM, and widget -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+  <!-- Your bundled widget JS (make sure this is built and deployed) -->
+  <script src="/raffle-widget.js"></script>
+
+  <!-- Initialize Widget -->
+  <script>
+    const root = ReactDOM.createRoot(document.getElementById('widget-root'));
+    root.render(React.createElement(RaffleWidget, { userId: '123' }));
+  </script>
 </body>
 </html>
