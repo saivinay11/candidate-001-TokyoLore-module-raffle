@@ -44,11 +44,18 @@ const RaffleWidget = ({ userId = 123 }: Props) => {
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 100, currency: 'usd' }),
+        body: JSON.stringify({
+          amount: 100,              // Amount in cents
+          currency: 'usd',
+          userId: userId?.toString(), // Convert number to string
+          ticketCount: 1
+        }),
       });
+
       const data = await res.json();
-      if (data.sessionId) {
-        window.location.href = `https://checkout.stripe.com/pay/${data.sessionId}`;
+
+      if (data.url) {
+        window.location.href = data.url;
       } else {
         setError('Payment failed. Please try again.');
       }
@@ -56,6 +63,7 @@ const RaffleWidget = ({ userId = 123 }: Props) => {
       setError('Payment failed. Please try again.');
     }
   };
+
 
   useEffect(() => {
     if (expanded) fetchTickets();
