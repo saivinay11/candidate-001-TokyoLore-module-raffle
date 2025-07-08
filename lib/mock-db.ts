@@ -1,10 +1,11 @@
 /**
  * Mock database for demonstration purposes
- * In a real application, this would be a proper database with persistence
  */
 import { RaffleEntry } from "@/types/app";
 
-// User ticket data structure
+// --------------------
+// Types & Interfaces
+// --------------------
 interface UserTicketData {
   count: number;
   lastUpdated: Date;
@@ -18,13 +19,14 @@ interface MockDatabaseOperations {
   resetDatabase: () => void;
 }
 
-// Mock tickets database - maps user IDs to ticket information
+// --------------------
+// Internal Data Stores
+// --------------------
 const _userTicketData: Record<string, UserTicketData> = {
   "123": { count: 5, lastUpdated: new Date() },
   "456": { count: 2, lastUpdated: new Date() },
 };
 
-// Store ticket update history for debugging and auditing
 const _ticketUpdateHistory: Array<{
   userId: string;
   previousCount: number;
@@ -33,9 +35,9 @@ const _ticketUpdateHistory: Array<{
   operation: "increment" | "update" | "reset";
 }> = [];
 
-/**
- * Add an entry to the ticket update history
- */
+// --------------------
+// Helper: Record Updates
+// --------------------
 const recordUpdate = (
   userId: string,
   previousCount: number,
@@ -51,121 +53,64 @@ const recordUpdate = (
   });
 };
 
-/**
- * Mock database operations
- */
+// --------------------
+// Core MockDB Functions
+// --------------------
 const mockDatabaseOperations: MockDatabaseOperations = {
-  // Get ticket count for a user
   getTickets: (userId: string): number => {
-    if (typeof userId !== "string" || !userId) {
-      console.error("Invalid userId:", userId);
-      return 0;
-    }
-
-    const userData = _userTicketData[userId];
-    return userData ? userData.count : 0;
+    return _userTicketData[userId]?.count || 0;
   },
 
-  // Update ticket count for a user
   updateTickets: (userId: string, count: number): boolean => {
-    if (typeof userId !== "string" || !userId) {
-      console.error("Invalid userId:", userId);
-      return false;
-    }
-
-    if (typeof count !== "number" || isNaN(count) || count < 0) {
-      console.error("Invalid ticket count:", count);
-      return false;
-    }
-
-    const previousCount = mockDatabaseOperations.getTickets(userId);
-
-    // Update or create user data
-    _userTicketData[userId] = {
-      count,
-      lastUpdated: new Date(),
-    };
-
-    recordUpdate(userId, previousCount, count, "update");
-    console.log(`Updated tickets for user ${userId}: ${count}`);
+    if (!userId || count < 0) return false;
+    const previous = mockDatabaseOperations.getTickets(userId);
+    _userTicketData[userId] = { count, lastUpdated: new Date() };
+    recordUpdate(userId, previous, count, "update");
     return true;
   },
 
-  // Increment ticket count for a user
-  incrementTickets: (userId: string, amount = 1): number => {
-    if (typeof userId !== "string" || !userId) {
-      console.error("Invalid userId:", userId);
-      return 0;
-    }
-
-    if (typeof amount !== "number" || isNaN(amount) || amount <= 0) {
-      console.error("Invalid increment amount:", amount);
-      return mockDatabaseOperations.getTickets(userId);
-    }
-
-    const previousCount = mockDatabaseOperations.getTickets(userId);
-    const newCount = previousCount + amount;
-
-    // Update or create user data
-    _userTicketData[userId] = {
-      count: newCount,
-      lastUpdated: new Date(),
-    };
-
-    recordUpdate(userId, previousCount, newCount, "increment");
-    console.log(
-      `Incremented tickets for user ${userId} by ${amount} to ${newCount}`
-    );
+  incrementTickets: (userId: string, amount: number = 1): number => {
+    if (!userId || amount <= 0) return mockDatabaseOperations.getTickets(userId);
+    const previous = mockDatabaseOperations.getTickets(userId);
+    const newCount = previous + amount;
+    _userTicketData[userId] = { count: newCount, lastUpdated: new Date() };
+    recordUpdate(userId, previous, newCount, "increment");
     return newCount;
   },
 
-  // Get all user IDs
-  getAllUsers: (): string[] => {
-    return Object.keys(_userTicketData);
-  },
+  getAllUsers: (): string[] => Object.keys(_userTicketData),
 
-  // Reset the database to initial state
   resetDatabase: (): void => {
-    // Get all current user IDs
     const userIds = Object.keys(_userTicketData);
-
-    // Record all resets
-    userIds.forEach((userId) => {
-      const previousCount = _userTicketData[userId].count;
-      recordUpdate(userId, previousCount, 0, "reset");
+    userIds.forEach((id) => {
+      const previous = _userTicketData[id].count;
+      recordUpdate(id, previous, 0, "reset");
+      delete _userTicketData[id];
     });
 
-    // Clear the database
-    userIds.forEach((key) => {
-      delete _userTicketData[key];
-    });
-
-    // Restore initial state
     _userTicketData["123"] = { count: 5, lastUpdated: new Date() };
     _userTicketData["456"] = { count: 2, lastUpdated: new Date() };
 
-    console.log("Database reset to initial state");
+    console.log("🧹 Mock DB reset to initial state");
   },
 };
 
-// Create a proxy for backward compatibility with direct array access
+// --------------------
+// Exports
+// --------------------
+export const mockDB = mockDatabaseOperations;
+
 export const userTickets = new Proxy<Record<string, number>>(
   {},
   {
     get(_, userId: string) {
-      return mockDatabaseOperations.getTickets(userId);
+      return mockDB.getTickets(userId);
     },
     set(_, userId: string, value: number) {
-      return mockDatabaseOperations.updateTickets(userId, value);
+      return mockDB.updateTickets(userId, value);
     },
   }
 );
 
-// Export the database operations
-export const mockDB = mockDatabaseOperations;
-
-// For testing and debugging
-export const resetMockDatabase = mockDatabaseOperations.resetDatabase;
-
-// Export types for reuse
+export const resetMockDatabase = mockDB.resetDatabase;
 export type { UserTicketData };

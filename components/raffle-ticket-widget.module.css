@@ -57,3 +57,45 @@
     opacity: 1;
   }
 }
+
+
+.inputGroup {
+  margin-top: 1rem;
+}
+
+.inputGroup label {
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--accent-color, #ccc);
+  border-radius: 6px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.stepper input {
+  width: 50px;
+  text-align: center;
+  font-size: 16px;                                        
+  border: none;
+  outline: none;
+}
+
+.stepper button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stepper button:hover {
+  background-color: #b71c1c;
+}

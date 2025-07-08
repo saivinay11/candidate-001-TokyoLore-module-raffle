@@ -4,7 +4,7 @@ import styles from './raffle-ticket-widget.module.css';
 
 const RaffleWidget = ({ userId = 123 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [tickets, setTickets] = useState(null);
+  const [tickets, setTickets] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [ticketCountToBuy, setTicketCountToBuy] = useState(1);
@@ -26,7 +26,7 @@ const RaffleWidget = ({ userId = 123 }) => {
       await fetch('/api/raffle-entry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
+        body: JSON.stringify({ userId, ticketCount: ticketCountToBuy }),
       });
       await fetchTickets();
     } catch {
@@ -75,13 +75,23 @@ const RaffleWidget = ({ userId = 123 }) => {
           {tickets !== null ? (
             <>
               <p>You have {tickets} tickets.</p>
-              <p>Tickets to Buy:</p>
-              <input
-                type="number"
-                min="1"
-                value={ticketCountToBuy}
-                onChange={(e) => setTicketCountToBuy(parseInt(e.target.value) || 1)}
-              />
+              <div className={styles.inputGroup}>
+                <label htmlFor="ticketCount">Tickets to Buy:</label>
+                <div className={styles.stepper}>
+                  <button onClick={() => setTicketCountToBuy(Math.max(1, ticketCountToBuy - 1))}>−</button>
+                  <input
+                    type="number"
+                    id="ticketCount"
+                    min="1"
+                    value={ticketCountToBuy}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value, 10);
+                      if (!isNaN(val)) setTicketCountToBuy(Math.max(1, val));
+                    }}
+                  />
+                  <button onClick={() => setTicketCountToBuy(ticketCountToBuy + 1)}>+</button>
+                </div>
+              </div>
               <button className={styles.button} onClick={joinRaffle} disabled={loading}>
                 {loading ? 'Joining...' : 'Join the Raffle'}
               </button>
