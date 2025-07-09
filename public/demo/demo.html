@@ -15,11 +15,21 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
+    .warning {
+      color: #D32F2F;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
   <h1>🎟️ Raffle Widget Demo</h1>
   <p>This demo shows the raffle ticket widget in action, embedded from the live staging site.</p>
+
+  <p class="warning">
+    ⚠️ Note: Stripe payment checkout will not open inside this demo view. 
+    Please open the link in a new browser tab for full functionality.
+  </p>
 
   <iframe
     src="https://candidate-001-tokyolore-module-raffle.vercel.app/"
