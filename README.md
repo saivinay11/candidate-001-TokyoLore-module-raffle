@@ -1,180 +1,123 @@
 # TokyoLore Staging - Unified Platform 🗼
 
-**Live Staging URL:** https://tokyolore-staging.netlify.app  
-**GitHub Repository:** https://github.com/krishna512-code/tokyolore-staging.git
+> ⚠️ This repository is a tech assessment submission for Alatree Ventures. The base project was cloned from the provided starter, and extended with required modules such as the raffle widget, payment integration, and demo components.
 
-A city-centric platform showcasing Tokyo's hidden street-art, urban legends, and community stories through photos, videos, poems, sketches, and interactive features.
+## TokyoLore Raffle Widget 🎟️
 
-## 🎯 Project Overview
+**Live Staging URL:**  
+[https://candidate-001-tokyolore-module-raffle.vercel.app](https://candidate-001-tokyolore-module-raffle.vercel.app)
 
-This repository successfully merges all modules from both source repositories into a unified TokyoLore platform:
+**GitHub Repository:**  
+[https://github.com/rahul-pal-mastizone/candidate-001-TokyoLore-module-raffle](https://github.com/rahul-pal-mastizone/candidate-001-TokyoLore-module-raffle)
 
-### From Repository 1: [Task-Tokyo-Lore](https://github.com/arpitsehal/Task-Tokyo-Lore)
-- ✅ **Header & Footer** - Beautiful navigation with newsletter signup
-- ✅ **Story Grid** - Interactive story cards with hover effects  
-- ✅ **Submit Form** - Complete story submission with validation
-- ✅ **SEO & Copy** - Proper metadata and descriptions
-
-### From Repository 2: [candidate-00X-Tokyolore-raffle](https://github.com/harshadidev/candidate-00X-Tokyolore-raffle)
-- ✅ **Raffle Ticket Widget** - Fixed bottom-right corner widget
-- ✅ **Payments Integration** - Stripe checkout and webhook handling
-- ✅ **CareDuel Banners** - Topic of the week integration
-- ✅ **Awards Panels** - Vote Top216 and Explore TheTop36
-
-## 🚀 Live Features
-
-### 🏠 Home Page
-- **Hero Section** - "Discover Tokyo's Untold Stories" with gradient background
-- **About Section** - "Where Stories Live" with beautiful imagery
-- **Call-to-Action Buttons** - Explore Stories & Share Your Story
-- **CareDuel Integration** - Topic of the week banner
-- **Awards Panels** - Vote Top216 and Explore TheTop36
-
-### 📖 Stories Page
-- **Story Grid Layout** - Responsive card design
-- **Hover Effects** - Interactive story cards
-- **Loading States** - Smooth user experience
-- **Mock Data** - Sample Tokyo stories
-
-### ✍️ Submit Page
-- **Story Submission Form** - Complete with validation
-- **Form Fields** - Name, email, title, and story body
-- **Error Handling** - Real-time validation feedback
-- **Success States** - Confirmation messages
-
-### 🎫 Raffle Widget
-- **Fixed Position** - Bottom-right corner
-- **Expand/Collapse** - Smooth animations
-- **Payment Integration** - Stripe checkout
-- **Ticket Management** - Entry tracking
-
-## 🛠️ Technical Stack
-
-- **Framework:** Next.js 15.2.4 with TypeScript
-- **Styling:** Tailwind CSS with custom design system
-- **Deployment:** Netlify (automatic HTTPS, global CDN)
-- **Fonts:** Playfair Display & Lora (Google Fonts)
-- **Icons:** Lucide React
-- **Payments:** Stripe integration
-- **State Management:** React hooks
-- **Form Handling:** React forms with validation
-
-## 🎨 Design Features
-
-- **Color Scheme:** Pink/coral theme (#E91E63)
-- **Typography:** Beautiful serif fonts for headings
-- **Responsive:** Mobile-first design approach
-- **Animations:** Smooth transitions and hover effects
-- **Accessibility:** ARIA labels and semantic HTML
-
-## 📱 Pages & Routes
-
-- `/` - Home page with hero section and about
-- `/stories` - Story grid with interactive cards
-- `/submit` - Story submission form
-- `/payment-success` - Payment confirmation
-- `/payment-cancelled` - Payment cancellation
-- `/api/*` - Backend API routes for payments and raffle
-
-## 🔧 API Endpoints
-
-- `POST /api/create-checkout-session` - Stripe checkout
-- `POST /api/raffle-entry` - Raffle ticket entry
-- `GET /api/raffle-status` - Raffle status check
-- `POST /api/stripe-webhook` - Stripe webhook handling
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/krishna512-code/tokyolore-staging.git
-
-# Navigate to project directory
-cd tokyolore-staging
-
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-```
-
-### Environment Variables
-Create a `.env.local` file with:
-```env
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-STRIPE_WEBHOOK_SECRET=your_webhook_secret
-```
-
-### Build & Deploy
-```bash
-# Build for production
-npm run build
-
-# Start production server
-npm start
-```
-
-## 🌐 Deployment
-
-### Netlify (Current)
-- **URL:** https://tokyolore-staging.netlify.app
-- **Auto-deploy:** Connected to GitHub repository
-- **HTTPS:** Automatic SSL certificate
-- **CDN:** Global content delivery network
-
-### Vercel (Alternative)
-- **URL:** https://tokyolore-staging.vercel.app
-- **Auto-deploy:** Connected to GitHub repository
-
-## 📊 Performance
-
-- **Lighthouse Score:** 90+ (Performance, Accessibility, Best Practices, SEO)
-- **Bundle Size:** Optimized with Next.js
-- **Loading Speed:** Fast with static generation
-- **Mobile Responsive:** Perfect on all devices
-
-## 🔒 Security
-
-- **HTTPS:** Automatic SSL encryption
-- **Environment Variables:** Secure API key management
-- **Input Validation:** Form validation and sanitization
-- **CORS:** Proper cross-origin resource sharing
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is created for the TokyoLore tech assessment. All rights reserved.
-
-## 👨‍💻 Author
-
-**Krishna Kant Narayan**  
-- GitHub: [@krishna512-code](https://github.com/krishna512-code)
-- Project: TokyoLore Staging Platform
-
-## 🙏 Acknowledgments
-
-- **Arpit Sehal** - Original Task-Tokyo-Lore design and components
-- **Harshadidev** - Raffle widget and payment integration
-- **CareDuel** - Topic of the week integration
-- **Top216 & TheTop36** - Awards panel integrations
+**Demo Page:**  
+[https://candidate-001-tokyolore-module-raffle.vercel.app/demo/demo.html](https://candidate-001-tokyolore-module-raffle.vercel.app/demo/demo.html)
 
 ---
 
-**🎯 Submission Status:** ✅ **COMPLETE**  
-**📅 Deadline:** June 23, 2025, 5 PM (UAE TIME)  
-**🌐 Live URL:** https://tokyolore-staging.netlify.app  
-**📁 Repository:** https://github.com/krishna512-code/tokyolore-staging.git
+## 🎯 Overview
+
+This module implements a **Raffle Ticket Widget** with Stripe payment integration for the **TokyoLore** microsite. Users can:
+- View current ticket count
+- Join the raffle (manual or payment)
+- Purchase raffle tickets via Stripe
+- View payment success and failure pages
+
+Built specifically for the **Tech Assessment** (Contract Web Developer role).
+
+---
+
+## ✅ Features Implemented
+
+- 🔴 Collapsible red ticket icon (`#D32F2F`), fixed at bottom-right
+- 🪄 Slide-up panel (300×350 px) on expand
+- 🎫 View and manage raffle ticket count
+- 🔁 “Join the Raffle” updates ticket count via mock API
+- 💳 Stripe Checkout for ticket purchase (test mode)
+- ✅ Confirmation after successful purchase
+- ⚠️ Error handling for failures (API & Stripe)
+- 🎨 Styling via `--primary-color` and `--accent-color`
+- 🧪 Demo file (`demo.html`) showing real widget usage
+
+---
+
+## 📁 Project Structure
+
+```
+/demo/demo.html         # Standalone demo page
+/components/raffle/     # RaffleWidget component (TypeScript + CSS)
+pages/api/raffle-entry  # API: Join the raffle (POST)
+pages/api/raffle-status # API: Get ticket count (GET)
+pages/api/create-checkout-session.ts # Stripe Checkout
+lib/mock-db.ts          # Mock DB logic for tracking tickets
+```
+
+---
+
+## 🔧 Endpoints
+
+| Endpoint                         | Method | Description                        |
+|----------------------------------|--------|------------------------------------|
+| `/api/raffle-status?userId=123` | GET    | Returns current ticket count       |
+| `/api/raffle-entry`             | POST   | Adds raffle ticket for user        |
+| `/api/create-checkout-session`  | POST   | Creates Stripe checkout session    |
+| `/payment-success`              | GET    | Stripe success redirect page       |
+| `/payment-cancelled`            | GET    | Stripe failure redirect page       |
+
+---
+
+## 💡 Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **UI:** CSS Modules
+- **Payments:** Stripe API (test mode)
+- **Deployment:** Vercel
+- **Demo Support:** `demo.html` with embedded widget
+
+---
+
+## ▶️ Running Locally
+
+### Prerequisites
+- Node.js 18+
+- Stripe test keys
+
+### Setup
+```bash
+git clone https://github.com/rahul-pal-mastizone/candidate-001-TokyoLore-module-raffle
+cd candidate-001-TokyoLore-module-raffle
+npm install
+```
+
+### Configure Environment
+Create `.env.local`:
+```env
+STRIPE_SECRET_KEY=your_test_secret_key
+STRIPE_PUBLISHABLE_KEY=your_test_publishable_key
+STRIPE_WEBHOOK_SECRET=your_test_webhook_secret
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### Start Dev Server
+```bash
+npm run dev
+```
+
+---
+
+## ✅ Submission Summary
+
+- ✅ Widget meets all functional requirements
+- ✅ Stripe integration works in test mode
+- ✅ Included widget demo (`demo.html`)
+- ✅ Responsive, accessible, and styled professionally
+- ✅ All endpoints handled via API routes
+
+---
+
+## 🙋‍♂️ Author
+
+**👨‍💻 Rahul Pal**  
+- GitHub: [@rahul-pal-mastizone](https://github.com/rahul-pal-mastizone)
+- Email: rahulpal.mastizone@gmail.com
