@@ -120,4 +120,4 @@ npm run dev
 
 **👨‍💻 Rahul Pal**  
 - GitHub: [@rahul-pal-mastizone](https://github.com/rahul-pal-mastizone)
-- Email: rahulpal.mastizone@gmail.com
+- Email: rahulpal.moderntechno@gmail.com
