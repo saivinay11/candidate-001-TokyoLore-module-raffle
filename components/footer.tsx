@@ -37,7 +37,8 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><a href="/guide" className="hover:text-pink-600 transition-colors">Tokyo Guide</a></li>
               <li><a href="/photography-tips" className="hover:text-pink-600 transition-colors">Photography Tips</a></li>
-              <li><a href="mailto:support@tokyolore.com" className="hover:text-pink-600 transition-colors">Contact Us</a></li>
+              <li><a href="mailto:support@tokyolore.com" className="hover:text-pink-600 transition-colors">Contact Us</a></li>     
+              <li><a href="https://www.linkedin.com/company/alatree-ventures/posts/?feedView=all" className="hover:text-pink-600 transition-colors">LinkedIn</a></li>
               <li><a href="/privacy" className="hover:text-pink-600 transition-colors">Privacy Policy</a></li>
             </ul>
           </div>
